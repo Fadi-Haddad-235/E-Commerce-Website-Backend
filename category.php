@@ -1,10 +1,14 @@
-
 <?php
 include ('connection.php');
-$items = array();
-$qeury = $mysqli->prepare("SELECT * FROM items");
+
+$category = $_GET['category'];
+
+$categories = array();
+$qeury = $mysqli->prepare("SELECT * FROM items where item_category=?");
+$qeury->bind_param('s',$category);
 $qeury->execute();
 $qeury->bind_result($item_id, $item_name,$item_price, $item_description, $item_img_src,$item_category);
+
 
 while ($qeury->fetch()) {
     $item = array(
@@ -13,10 +17,10 @@ while ($qeury->fetch()) {
         "price" => $item_price,
         "description" => $item_description,
         "src"=>$item_img_src,
-        "category=>$item_category",
+        "category"=>$item_category,
     );
-    $items[] = $item;
+    $categories[] = $item;
 }
+echo json_encode($categories);
 
-echo json_encode($items);
 ?>
