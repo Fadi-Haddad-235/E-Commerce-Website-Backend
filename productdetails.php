@@ -22,8 +22,9 @@ echo json_encode($response);
 
 //Similar products
 
-$querySimilar=$mysqli->prepare("select * from items where item_category=?");
-$querySimilar->bind_param("s",$category);
+$querySimilar=$mysqli->prepare("SELECT * FROM `items` WHERE  item_category=? AND item_id!=? ORDER BY RAND()
+LIMIT 6 ");
+$querySimilar->bind_param("si",$category,$id);
 $querySimilar->execute();
 $resultSimilar = $querySimilar->get_result();
 
