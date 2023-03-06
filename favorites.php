@@ -1,14 +1,16 @@
 <?php
 include ('connection.php');
 
-$category = $_GET['category'];
+$logged_user= $_GET['logged_user'];
 
-$categories = array();
-$query = $mysqli->prepare("SELECT * FROM items where item_category=?");
-$query->bind_param('s',$category);
+$query = $mysqli->prepare("SELECT * FROM favorites
+    INNER JOIN items ON favorites.item_id = items.item_id
+    WHERE favorites.user_id =?");
+$query->bind_param('i',$logged_user);
 $query->execute();
 $query->bind_result($item_id, $item_name,$item_price, $item_description, $item_img_src,$item_category);
 
+$favorites = array();
 
 while ($query->fetch()) {
     $item = array(
@@ -19,8 +21,9 @@ while ($query->fetch()) {
         "src"=>$item_img_src,
         "category"=>$item_category,
     );
-    $categories[] = $item;
+    $favorites[] = $item;
 }
-echo json_encode($categories);
 
+
+echo json_encode($favorites);
 ?>
