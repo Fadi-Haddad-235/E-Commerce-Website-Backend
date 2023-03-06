@@ -23,12 +23,12 @@ echo json_encode($response);
 //Similar products
 
 $querySimilar=$mysqli->prepare("select * from items where item_category=?");
-$querySimilar->bind_param("i",$category);
+$querySimilar->bind_param("s",$category);
 $querySimilar->execute();
 $resultSimilar = $querySimilar->get_result();
 
 while($objectSimilar = $resultSimilar->fetch_assoc()){
-    $array=$objectSimilar;
+    $array[]=$objectSimilar;
 }
 
 $responseSimilar['similar']=$array;
