@@ -16,11 +16,8 @@ while ($object = $result->fetch_assoc()){
 
 $response["product"] = $data; 
 
-echo json_encode($response);
 
-
-
-//Similar products
+// Similar products
 
 $querySimilar=$mysqli->prepare("SELECT * FROM `items` WHERE  item_category=? AND item_id!=? ORDER BY RAND()
 LIMIT 6 ");
@@ -32,9 +29,9 @@ while($objectSimilar = $resultSimilar->fetch_assoc()){
     $array[]=$objectSimilar;
 }
 
-$responseSimilar['similar']=$array;
+$response['similar']=$array;
 
-echo json_encode($responseSimilar);
+echo json_encode($response);
 
 
-?>
+// ?>

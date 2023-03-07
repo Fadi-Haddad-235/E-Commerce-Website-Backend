@@ -6,12 +6,12 @@ include ('connection.php');
 $users = [];
 $query = $mysqli->prepare("SELECT * FROM users");
 $query->execute();
-$query->bind_result($id, $username, $email, $password);
+$query->bind_result($id, $user_name, $email, $password);
 
 while ($query->fetch()) {
     $user = array(
         "id" => $id,
-        "username" => $username,
+        "username" => $user_name,
         "email" => $email,
         "password" => $password,
     );
