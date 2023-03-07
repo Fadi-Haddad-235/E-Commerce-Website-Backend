@@ -4,10 +4,10 @@ header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Methods:GET,POST,PUT,DELETE,OPTIONS");
 include ('connection.php');
 
-$id = $_GET["item_id"];
+$id = $_GET["id"];
 
 // Delete the item from the database
-$query = $mysqli->prepare("DELETE FROM items WHERE item_id = ?");
+$query = $mysqli->prepare("DELETE FROM items WHERE item_id =?");
 $query->bind_param("i", $id);
 
 if ($query->execute()) {
